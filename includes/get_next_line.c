@@ -6,11 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 21:04:41 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/12 15:18:00 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/12 15:21:32 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/get_next_line.h"
+#include "get_next_line.h"
 
 static int
 	readline(t_file *file, int fd, char **line)

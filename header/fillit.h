@@ -6,14 +6,14 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:04:16 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/11 13:52:51 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/12 15:22:14 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
-# include "libft/libft.h"
-# include "get_next_line.h"
+# include "../includes/libft/libft.h"
+# include "../includes/get_next_line.h"
 # include <stdlib.h>
 # include <fcntl.h>
 
