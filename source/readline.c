@@ -6,25 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 11:13:27 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/12 11:16:14 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/14 21:33:42 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-//#define DEBUG 0
-/*
-static void
-	debug(char *message)
-{
-	if (!DEBUG)
-		return ;
-	if (!message)
-		ft_putendl("Error in debug message.");
-	ft_putstr("\033[32mDEBUG:\t\033[1m\033[36m");
-	ft_putendl(message);
-	ft_putstr("\033[0m");
-}//*/
 
 static int
 	process(char **str, size_t fd, char **line)
@@ -62,6 +48,5 @@ int
 		return (-1);
 	if (!file[fd])
 		file[fd] = ft_strnew(0);
-//	debug(ft_strjoin("file[fd]: ", file[fd]));
 	return (process(&file[fd], (size_t)fd, line));
 }

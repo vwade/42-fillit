@@ -6,14 +6,14 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 09:36:11 by viwade            #+#    #+#             */
-/*   Updated: 2018/11/10 14:54:36 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/15 18:00:03 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strsub(char const *s, size_t start, size_t len)
 {
 	char	*new;
 
