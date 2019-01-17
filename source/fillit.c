@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/16 20:09:32 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/16 22:44:08 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 typedef t_tetra	tetra_t;
 typedef t_list	list_t;
-typedef t_coord coord_t;
+typedef t_coord	coord_t;
 
 static void
 	normalize(tetra_t **tetra)
@@ -71,11 +71,7 @@ static tetra_t
 		}
 		++i;
 	}
-	i = 0;
-	while (i < 4)
-	{
-		
-	}
+	normalize(&tetra);
 	return (tetra);
 }
 
@@ -94,34 +90,40 @@ static void
 static int
 	validate(tetra_t *tetra)
 {
-	int		i;
+	int	i;
+	int	count;
 
 	i = 0;
 	ft_putnbr(tetra->pos.x);
 	ft_putnbr(tetra->pos.y); ft_putendl(0);
-	while (i < 4){
+	while (i < 4)
+	{
 		ft_putnbr(tetra->ndx[i].x);
 		ft_putnbr(tetra->ndx[i].y); ft_putendl(0);
 		++i;
 	}
 	i = 0;
+	count = 0;
 	while (i < 3)
-		if (tetra->ndx[i].x + 1 == tetra->ndx[i + 1].x ||
-				)
+		if (count != 3)
+			count += (tetra->ndx[i].x + 1 == tetra->ndx[i + 1].x)
+				+ (tetra->ndx[i].y + 1 == tetra->ndx[i + 1].y);
+	ft_putendl("VALIDATION COUNT:\t"); ft_putnbr(count); ft_putendl(0);
+	return (count == 3);
 }
 
 static int
 	isvalid(char *s)
 {
 	while(*s++)
-		if (*(s - 1) != '.' || *(s - 1) != '#')
+		if (*(s - 1) != '.' && *(s - 1) != '#')
 			return (0);
 	return(1);
 }
 
 
 static void
-	fillit(int fd, list_t *list)
+	fillit(int fd, list_t *list, int *ret)
 {
 	char	*line;
 	char	*str;
@@ -136,7 +138,9 @@ static void
 	while (readline(fd, &line) > 0)
 	{
 		tmp = str;
-		if (ft_strlen(line) == 4 && ft_strchr(line, ''))
+		if (count != 5)
+			if ((ret[0] = (ft_strlen(line) != 4 && !isvalid(line))))
+				return ft_error("error");
 		str = ft_strjoin(str, line);
 		free(tmp);
 		count++;
@@ -144,13 +148,12 @@ static void
 		{
 			count = 0;
 			ft_lstpush(&list, ft_lstnew(tetramino(str), ft_strlen(str)));
-			if (!validate((tetra_t *)list->content))
+			if ((ret[0] = (!validate((tetra_t *)list->content))))
 				return ft_error("error");
 			ft_bzero(str, ft_strlen(str));
 		}
 	}
-	if (validate(list))
-		solve(list);
+	if ((0)) solve(list);
 }
 
 int
@@ -165,42 +168,55 @@ int
 	fd = (open(v[1], O_RDONLY));
 	if (n != 2)
 	{
-		ft_putendl("usage:\t""fillit tetrimino_file");
+		ft_putendl("usage:\t""fillit tetrimino_file (1-26 pieces max)");
 		return (1);
 	}
 	if (n == 2)
 		if (fd > 0 && fd < FD_LIMIT && read(fd, 0, 0) != -1)
-			fillit(fd, list);
+			fillit(fd, list, &ret);
 	return (ret);
 	return (ret);
 }
 
 /*
 **	Footnotes
-**	
+**
 **	Will need.
 **	Map variable
 **	Choice of variable storage
-**	
-**	
-**	
+**
+**
+**
 **	Read input.
 **	4 lines at a time
-**	
+**
 **	Validate.
 **	Each line is length of 4
 **	Only '.' or '#' characters allowed
 **	Total characters counted == 16.
-**	
+**
 **	Partition.
-**	
-**	
-**	
-**	
-**	
-**	
-**	
-**	
-**	
-**	
+**
+**
+**
+**
+**	Solve for coordinates. Where "n" is the size of grid.
+**
+**	CONVERSION: String Index => Coordinate
+**	cd.x = i % n;
+**	cd.y = i / n;
+**
+**	CONVERSION: Coordinate => String Index
+**	i = (cd.y * n) + (cd.x);
+**
+**
+**
+**
+**
+**
+**
+**
+**
+**
+**
 */

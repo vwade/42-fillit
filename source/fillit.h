@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:04:16 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/12 15:22:14 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/16 22:07:07 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,36 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-struct s_str
+struct	s_str
 {
 	char	*str;
 	size_t	len;
 };
-typedef struct s_str t_str;
+typedef struct s_str	t_str;
 
-struct s_map
+struct	s_map
 {
 	size_t	size;
 	char	*str;
 };
-typedef struct s_map t_map;
+typedef struct s_map	t_map;
 
-struct s_coord
+struct	s_coord
 {
 	int	x;
 	int	y;
 };
-typedef struct s_coord t_coord;
-struct s_tetra
+typedef struct s_coord	t_coord;
+struct	s_tetra
 {
 	t_coord	pos;
 	t_coord ndx[4];
 };
-typedef struct s_tetra t_tetra;
+typedef struct s_tetra	t_tetra;
 
-//char	*tetrimino();
-//void	tetris();
 t_str	*write_tstr(t_str *dst, char *content);
 
-size_t  tetra_len(t_tetra **list);
+size_t	tetra_len(t_tetra **list);
 t_tetra	**tetra_new(size_t size);
 t_tetra	**tetra_add(t_tetra **list, t_tetra *piece);
 void	tetra_del(t_tetra *node);
