@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/16 07:18:01 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/16 20:09:32 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,40 @@
 
 typedef t_tetra	tetra_t;
 typedef t_list	list_t;
+typedef t_coord coord_t;
+
+static void
+	normalize(tetra_t **tetra)
+{
+	int i;
+	int j;
+
+	tetra[0]->pos.y = tetra[0]->ndx[0].y;
+	tetra[0]->pos.x = tetra[0]->ndx[0].x;
+	i = 1;
+	while (i < 4)
+	{
+		if (tetra[0]->ndx[i].x < tetra[0]->pos.x)
+			tetra[0]->pos.x = tetra[0]->ndx[i].x;
+		++i;
+	}
+	i = 0;
+	while ((tetra[0]->pos.x > 0 || tetra[0]->pos.y > 0))
+	{
+		if (tetra[0]->pos.x > 0 && !(j = 0))
+		{
+			tetra[0]->pos.x -= 1;
+			while (j < 4)
+				tetra[0]->ndx[j--].x -= 1;
+		}
+		if (tetra[0]->pos.y > 0 && !(j = 0))
+		{
+			tetra[0]->pos.y -= 1;
+			while (j < 4)
+				tetra[0]->ndx[j--].y -= 1;
+		}
+	}
+}
 
 static tetra_t
 	*tetramino(char *str)
@@ -37,6 +71,11 @@ static tetra_t
 		}
 		++i;
 	}
+	i = 0;
+	while (i < 4)
+	{
+		
+	}
 	return (tetra);
 }
 
@@ -59,12 +98,25 @@ static int
 
 	i = 0;
 	ft_putnbr(tetra->pos.x);
-	ft_putnbr(tetra->pos.y);
-	while (1 < 4){
+	ft_putnbr(tetra->pos.y); ft_putendl(0);
+	while (i < 4){
 		ft_putnbr(tetra->ndx[i].x);
-		ft_putnbr(tetra->ndx[i].y);
+		ft_putnbr(tetra->ndx[i].y); ft_putendl(0);
 		++i;
 	}
+	i = 0;
+	while (i < 3)
+		if (tetra->ndx[i].x + 1 == tetra->ndx[i + 1].x ||
+				)
+}
+
+static int
+	isvalid(char *s)
+{
+	while(*s++)
+		if (*(s - 1) != '.' || *(s - 1) != '#')
+			return (0);
+	return(1);
 }
 
 
@@ -84,6 +136,7 @@ static void
 	while (readline(fd, &line) > 0)
 	{
 		tmp = str;
+		if (ft_strlen(line) == 4 && ft_strchr(line, ''))
 		str = ft_strjoin(str, line);
 		free(tmp);
 		count++;
