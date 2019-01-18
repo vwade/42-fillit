@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/16 22:44:08 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/18 14:20:06 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,10 @@ static tetra_t
 }
 
 static void
-	append(char **line, char *content)
-{
-	;
-}
-
-static void
 	solve(list_t *list)
 {
-	;
+	if (list)
+		;
 }
 
 static int
@@ -122,25 +117,25 @@ static int
 }
 
 
-static void
+static int
 	fillit(int fd, list_t *list, int *ret)
 {
 	char	*line;
 	char	*str;
 	char	*tmp;
-	t_map	*map;
+//	t_map	*map;
 
 	int		count;
 
-	map = map_new();
 	str = ft_strnew(0);
 	count = 0;
 	while (readline(fd, &line) > 0)
 	{
+		ft_putendl(line);
 		tmp = str;
 		if (count != 5)
 			if ((ret[0] = (ft_strlen(line) != 4 && !isvalid(line))))
-				return ft_error("error");
+				return (1);
 		str = ft_strjoin(str, line);
 		free(tmp);
 		count++;
@@ -149,11 +144,12 @@ static void
 			count = 0;
 			ft_lstpush(&list, ft_lstnew(tetramino(str), ft_strlen(str)));
 			if ((ret[0] = (!validate((tetra_t *)list->content))))
-				return ft_error("error");
+				return (2);
 			ft_bzero(str, ft_strlen(str));
 		}
 	}
 	if ((0)) solve(list);
+	return (0);
 }
 
 int
@@ -161,10 +157,20 @@ int
 {
 	int		fd;
 	int		ret;
+
 	list_t	*list;
 
 	ret = 0;
 	list = ft_lstnew(0, 0);
+	fd = (open(v[1], O_RDONLY));
+	char	*line;
+
+	while (get_next_line(fd, &line))
+	{
+		ft_putendl(line);
+		free(line);
+	}
+	close(fd);
 	fd = (open(v[1], O_RDONLY));
 	if (n != 2)
 	{
@@ -173,8 +179,11 @@ int
 	}
 	if (n == 2)
 		if (fd > 0 && fd < FD_LIMIT && read(fd, 0, 0) != -1)
-			fillit(fd, list, &ret);
-	return (ret);
+			ret = fillit(fd, list, &ret);
+	if (ret == 1)
+		ft_error("error: Problem with input file.");
+	else if (ret == 2)
+		ft_error("error: Invalid tetrimino.");
 	return (ret);
 }
 

@@ -6,10 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 15:59:12 by viwade            #+#    #+#             */
-/*   Updated: 2018/11/04 09:44:36 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/17 01:40:04 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <string.h>
 
 void	ft_bzero(void *s, size_t n)
@@ -20,7 +21,7 @@ void	ft_bzero(void *s, size_t n)
 	i = 0;
 	while ((size_t)i < n)
 	{
-		tmp = &s[i];
+		tmp = &((char *)s)[i];
 		tmp[0] = 0;
 		i++;
 	}

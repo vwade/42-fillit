@@ -6,10 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 20:11:26 by viwade            #+#    #+#             */
-/*   Updated: 2018/11/09 20:28:56 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/17 01:47:19 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <string.h>
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
@@ -20,8 +21,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	i = 0;
 	while (n--)
 	{
-		tmp = &dst[i];
-		tmp[0] = ((unsigned char *)src)[i];
+		tmp = &((char *)dst)[i];
+		tmp[0] = ((const char *)src)[i];
 		i++;
 	}
 	return (dst);

@@ -6,10 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 15:13:30 by viwade            #+#    #+#             */
-/*   Updated: 2018/11/09 20:20:01 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/17 01:42:16 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <string.h>
 
 void	*ft_memset(void *b, int c, size_t len)
@@ -20,8 +21,8 @@ void	*ft_memset(void *b, int c, size_t len)
 	i = 0;
 	while (len--)
 	{
-		dup = &b[i];
-		dup[0] = (unsigned char)c;
+		dup = &((char *)b)[i];
+		dup[0] = (char)c;
 		i++;
 	}
 	return (b);
