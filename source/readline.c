@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 11:13:27 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/14 21:33:42 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/19 14:54:25 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static int
 			line[0] = (tmp) ? ft_strsub(*str, 0, fd) : ft_strdup(*str);
 			*str = (tmp) ? ft_strdup(tmp + 1) : ft_strnew(0);
 			free(tmp - fd);
-			return (!!nb);
+			return (!!(line[0] || str[0] || nb));
 		}
 		if ((nb = (int)read((int)fd, buf, BUFF_SIZE)) < 0)
-			return (!!nb * -1);
+			return (-1);
 		buf[nb] = 0;
 		tmp = *str;
 		*str = ft_strjoin(tmp, buf);

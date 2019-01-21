@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/18 14:20:06 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/20 19:47:01 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,26 @@ static void
 	normalize(tetra_t **tetra)
 {
 	int i;
-	int j;
 
 	tetra[0]->pos.y = tetra[0]->ndx[0].y;
 	tetra[0]->pos.x = tetra[0]->ndx[0].x;
-	i = 1;
-	while (i < 4)
-	{
+	i = 0;
+	while (++i < 4)
 		if (tetra[0]->ndx[i].x < tetra[0]->pos.x)
 			tetra[0]->pos.x = tetra[0]->ndx[i].x;
-		++i;
-	}
-	i = 0;
 	while ((tetra[0]->pos.x > 0 || tetra[0]->pos.y > 0))
 	{
-		if (tetra[0]->pos.x > 0 && !(j = 0))
+		if (tetra[0]->pos.x > 0 && !(i = 0))
 		{
 			tetra[0]->pos.x -= 1;
-			while (j < 4)
-				tetra[0]->ndx[j--].x -= 1;
+			while (i < 4)
+				tetra[0]->ndx[i++].x -= 1;
 		}
-		if (tetra[0]->pos.y > 0 && !(j = 0))
+		if (tetra[0]->pos.y > 0 && !(i = 0))
 		{
 			tetra[0]->pos.y -= 1;
-			while (j < 4)
-				tetra[0]->ndx[j--].y -= 1;
+			while (i < 4)
+				tetra[0]->ndx[i++].y -= 1;
 		}
 	}
 }
@@ -53,15 +48,17 @@ static tetra_t
 	*tetramino(char *str)
 {
 	tetra_t	*tetra;
-	int		i, j;
+	int		i;
+	int		j;
 
 	if (!(tetra = (tetra_t *)malloc(sizeof(*tetra))))
 		return (NULL);
-	tetra = (tetra_t *)ft_memset(tetra, 0, sizeof(tetra));
-	j = i = 0;
+	tetra = (tetra_t *)ft_memset(tetra, 0, sizeof(*tetra));
+	j = 0;
+	i = 0;
 	while (str[i])
 	{
-		if (j >= 3)
+		if (j > 3)
 			break ;
 		if (str[i] == '#')
 		{
@@ -97,9 +94,9 @@ static int
 		ft_putnbr(tetra->ndx[i].y); ft_putendl(0);
 		++i;
 	}
-	i = 0;
+	i = -1;
 	count = 0;
-	while (i < 3)
+	while (i++ < 3)
 		if (count != 3)
 			count += (tetra->ndx[i].x + 1 == tetra->ndx[i + 1].x)
 				+ (tetra->ndx[i].y + 1 == tetra->ndx[i + 1].y);
@@ -117,14 +114,12 @@ static int
 }
 
 
-static int
+static void
 	fillit(int fd, list_t *list, int *ret)
 {
 	char	*line;
 	char	*str;
 	char	*tmp;
-//	t_map	*map;
-
 	int		count;
 
 	str = ft_strnew(0);
@@ -133,24 +128,35 @@ static int
 	{
 		ft_putendl(line);
 		tmp = str;
-		if (count != 5)
-			if ((ret[0] = (ft_strlen(line) != 4 && !isvalid(line))))
-				return (1);
+		if (count < 4)
+			if ((ret[0] = 1 * (ft_strlen(line) != 4 && !isvalid(line))))
+				return ;
 		str = ft_strjoin(str, line);
 		free(tmp);
 		count++;
 		if (count == 5)
 		{
-			count = 0;
-			ft_lstpush(&list, ft_lstnew(tetramino(str), ft_strlen(str)));
-			if ((ret[0] = (!validate((tetra_t *)list->content))))
-				return (2);
+			ft_lstpush(&list, ft_lstnew(tetramino(str), sizeof(tetra_t)));
+			if ((ret[0] = 2 * (!validate((tetra_t *)list->content))))
+				return ;
 			ft_bzero(str, ft_strlen(str));
+			count = 0;
 		}
 	}
-	if ((0)) solve(list);
-	return (0);
+	if ((ret[0] = 3 * (!list->content)))
+		return ;
+	if ((0))
+		solve(list);
+	return ;
 }
+
+/*
+**	Return Values:
+**	0	//	Normal program termination
+**	1	//	Problem with reading file
+**	2	//	Invalid tetramino piece
+**	3	//	Undefined behavior leading into program termination
+*/
 
 int
 	main(int n, char **v)
@@ -163,15 +169,6 @@ int
 	ret = 0;
 	list = ft_lstnew(0, 0);
 	fd = (open(v[1], O_RDONLY));
-	char	*line;
-
-	while (get_next_line(fd, &line))
-	{
-		ft_putendl(line);
-		free(line);
-	}
-	close(fd);
-	fd = (open(v[1], O_RDONLY));
 	if (n != 2)
 	{
 		ft_putendl("usage:\t""fillit tetrimino_file (1-26 pieces max)");
@@ -179,11 +176,13 @@ int
 	}
 	if (n == 2)
 		if (fd > 0 && fd < FD_LIMIT && read(fd, 0, 0) != -1)
-			ret = fillit(fd, list, &ret);
+			fillit(fd, list, &ret);
 	if (ret == 1)
 		ft_error("error: Problem with input file.");
 	else if (ret == 2)
 		ft_error("error: Invalid tetrimino.");
+	if (ret == 3)
+		ft_error("error: Function quit abruptly.");
 	return (ret);
 }
 
