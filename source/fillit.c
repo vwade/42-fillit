@@ -6,18 +6,18 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 18:00:47 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/27 21:16:35 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-typedef t_tetra	tetra_t;
-typedef t_list	list_t;
-typedef t_coord	coord_t;
+typedef t_tetra	t_tetra_t;
+typedef t_list	t_list_t;
+typedef t_coord	t_xy_t;
 
 static void
-	normalize(tetra_t **tetra)
+	normalize(t_tetra_t **tetra)
 {
 	int i;
 
@@ -44,16 +44,16 @@ static void
 	}
 }
 
-static tetra_t
+static t_tetra_t
 	*tetramino(char *str)
 {
-	tetra_t	*tetra;
-	int		i;
-	int		j;
+	t_tetra_t	*tetra;
+	int			i;
+	int			j;
 
-	if (!(tetra = (tetra_t *)malloc(sizeof(*tetra))))
+	if (!(tetra = (t_tetra_t *)malloc(sizeof(*tetra))))
 		return (NULL);
-	tetra = (tetra_t *)ft_memset(tetra, 0, sizeof(*tetra));
+	tetra = (t_tetra_t *)ft_memset(tetra, 0, sizeof(*tetra));
 	j = 0;
 	i = 0;
 	while (str[i])
@@ -73,7 +73,7 @@ static tetra_t
 }
 
 static int
-	validate(tetra_t *tetra)
+	validate(t_tetra_t *tetra)
 {
 	int	i;
 	int	count;
@@ -97,7 +97,7 @@ static int
 {
 	int		i;
 	int		count;
-	coord_t	x;
+	t_xy_t	x;
 
 	i = 0;
 	count = 0;
@@ -127,7 +127,7 @@ static int
 	{
 		if (*(s - 1) != '.' && *(s - 1) != '#' && *(s - 1) != '\n')
 			return (0);
-		count += (*s == '#');
+		count += (*(s - 1) == '#');
 	}
 	return (count == 4);
 }
@@ -161,25 +161,25 @@ static char
 }
 
 static int
-	tetra_fits(list_t *list, char **map, int n, int depth)
+	tetra_fits(t_list_t *list, char **map, int n, int depth)
 {
-	int		*i;
-	tetra_t	t;
-	coord_t	dim;
-	coord_t	x;
+	int			*i;
+	t_tetra_t	t;
+	t_xy_t		dim;
+	t_xy_t		x;
 
 	i = (int[5]){0, 0, 0, 0, -1};
-	x = (coord_t){0, 0};
-	dim = (coord_t){1, 1};
-	t = ((tetra_t *)list->content)[0];
+	x = (t_xy_t){0, 0};
+	dim = (t_xy_t){1, 1};
+	t = ((t_tetra_t *)list->content)[0];
 	while (++i[4] < 4)
-		dim = (coord_t){dim.x < t.ndx[i[4]].x + 1 ? t.ndx[i[4]].x + 1 : dim.x,
+		dim = (t_xy_t){dim.x < t.ndx[i[4]].x + 1 ? t.ndx[i[4]].x + 1 : dim.x,
 			dim.y < t.ndx[i[4]].y + 1 ? t.ndx[i[4]].y + 1 : dim.y};
 	if (dim.x > n || dim.y > n)
 		return (0);
 	while (i[1] < n * n - (dim.y - 1) * n && (i[0] = -1))
 	{
-		x = (coord_t){i[1] % n, i[1] / n};
+		x = (t_xy_t){i[1] % n, i[1] / n};
 		t.pos = x;
 		while (++i[0] < 4)
 			i[3] += (map[0][n * (t.pos.y + t.ndx[i[0]].y)
@@ -188,7 +188,8 @@ static int
 		{
 			while (++i[0] < 4)
 				map[0][n * (t.pos.y + t.ndx[i[0]].y)
-					+ t.pos.x + t.ndx[i[0]].x] = 'A' + depth;
+					+ t.pos.x + t.ndx[i[0]].x] = 'A' + depth % 26
+					+ (depth > 25 ? 32 : 0);
 			if ((i[0] = -1) && list->next)
 				if (tetra_fits(list->next, map, n, depth + 1))
 					return (1);
@@ -204,7 +205,21 @@ static int
 }
 
 static void
-	solve(list_t *list)
+	print_map(char *map, int size)
+{
+	int i;
+
+	i = 0;
+	while (&map[i] < &map[size * size])
+	{
+		write(1, &map[i], size);
+		write(1, "\n", 1);
+		i += size;
+	}
+}
+
+static void
+	solve(t_list_t *list)
 {
 	char	*map;
 	int		map_size;
@@ -220,11 +235,12 @@ static void
 			map_size++;
 		free(map);
 	}
-	ft_putendl(map);
+	print_map(map, map_size);
+	free(map);
 }
 
 static void
-	error_check(char *file, list_t *list, int *ret)
+	error_check(char *file, t_list_t *list, int *ret)
 {
 	int		i;
 	int		len;
@@ -239,18 +255,18 @@ static void
 		if ((ret[0] = 2 * (!str ||
 				(file[i + 20] != '\n' && file[i + 20] != '\0'))))
 			return ;
-		ft_lstpush(&list, ft_lstnew(tetramino(str), sizeof(tetra_t)));
+		ft_lstpush(&list, ft_lstnew(tetramino(str), sizeof(t_tetra_t)));
 		free(str);
 		i += 20 + (file[i + 20] == '\n');
 		if (!file[i])
 			break ;
-		if ((ret[0] = 2 * (!validate((tetra_t *)list->content)
+		if ((ret[0] = 2 * (!validate((t_tetra_t *)list->content)
 				|| (&file[i] > &file[len]))))
 			return ;
 	}
 	if ((ret[0] = 3 * (!list->content)))
 		return ;
-	return solve(list);
+	return (solve(list));
 }
 
 /*
@@ -265,25 +281,24 @@ static int
 	ret_function(int ret)
 {
 	if (ret == -1)
-		ft_putendl("usage:\t""fillit tetrimino_file (1-26 pieces max)");
+		ft_putendl("usage:\t""fillit input_file\n"
+			"file: (1-26 pieces max)");
 	if (ret == 1)
-		ft_error("error: Problem reading file. Possible invalid file format.");
+		ft_error("error");
 	if (ret == 2)
-		ft_error("error: Invalid tetrimino format.");
+		ft_error("error");
 	if (ret == 3)
-		ft_error("error: Function quit unexpectedly.");
-	if ((0))
-		solve(0);
+		ft_error("error");
 	return (ret);
 }
 
 int
 	main(int n, char **v)
 {
-	int		fd;
-	int		ret;
-	char	*input;
-	list_t	*list;
+	int			fd;
+	int			ret;
+	char		*input;
+	t_list_t	*list;
 
 	ret = 0;
 	list = NULL;
