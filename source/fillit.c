@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 17:56:33 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/27 18:00:47 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static int
 		if (count != 3)
 			count += (tetra->ndx[i].x + 1 == tetra->ndx[i + 1].x)
 				+ (tetra->ndx[i].y + 1 == tetra->ndx[i + 1].y);
-	ft_putstr("TETRA VALIDATION: "); ft_putnbr(count); ft_putendl(0);
 	return (count == 3);
 }
 
@@ -293,7 +292,6 @@ int
 	fd = (open(v[1], O_RDONLY));
 	if (!(input = readfile(fd)))
 		return (ret_function(1));
-	ft_putstr("INPUT >>\n"); ft_putendl(input);
 	error_check(input, list, &ret);
 	close(fd);
 	return (ret_function(ret));
