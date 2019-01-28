@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 21:16:35 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/27 21:28:23 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,14 +268,6 @@ static void
 		return ;
 	return (solve(list));
 }
-
-/*
-**	Return Values:
-**	0	//	Normal program termination
-**	1	//	Problem with reading file
-**	2	//	Invalid tetramino piece
-**	3	//	Undefined behavior leading into program termination
-*/
 
 static int
 	ret_function(int ret)
