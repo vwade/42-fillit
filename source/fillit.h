@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:04:16 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/16 22:07:07 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/20 20:18:06 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	tetra_del(t_tetra *node);
 t_coord	newcoord(void);
 
 int		readline(const int fd, char **line);
+char	*readfile(int fd);
 char	*map_size(size_t size);
 t_map	*map_new(void);
 

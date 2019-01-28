@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpush.c                                       :+:      :+:    :+:   */
+/*   ft_del.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/15 06:17:09 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 15:04:48 by viwade           ###   ########.fr       */
+/*   Created: 2019/01/21 05:25:07 by viwade            #+#    #+#             */
+/*   Updated: 2019/01/21 05:26:29 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_include.h"
 
 void
-	ft_lstpush(t_list **list, t_list *new)
+	ft_del(void *ap, size_t len)
 {
-	t_list	*push;
-
-	if (!list[0])
-	{
-		list[0] = new;
-		return ;
-	}
-	push = list[0];
-	while ((push->next))
-		push = push->next;
-	if (!push->content)
-	{
-		ft_lstdelone(list, ft_del);
-		push = new;
-	}
-	else
-		push->next = new;
+	ft_bzero(ap, len);
+	ft_memdel(&ap);
 }

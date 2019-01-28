@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpush.c                                       :+:      :+:    :+:   */
+/*   map_func.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/15 06:17:09 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 15:04:48 by viwade           ###   ########.fr       */
+/*   Created: 2019/01/24 13:34:21 by viwade            #+#    #+#             */
+/*   Updated: 2019/01/24 14:01:59 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_include.h"
+#include "fillit.h"
 
 void
-	ft_lstpush(t_list **list, t_list *new)
+	map_print(t_tetra *node, int order, char **map, size_t map_size)
 {
-	t_list	*push;
+	int	i;
+	t_coord x;
 
-	if (!list[0])
-	{
-		list[0] = new;
-		return ;
-	}
-	push = list[0];
-	while ((push->next))
-		push = push->next;
-	if (!push->content)
-	{
-		ft_lstdelone(list, ft_del);
-		push = new;
-	}
-	else
-		push->next = new;
+	i = -1;
+	x.x = node->pos.x;
+	x.y = node->pos.y;
+	while (++i < 4)
+		map[0][((node->ndx[i].y + x.y) * map_size)
+			+ (node->ndx[i].x + x.x)] = order + 'A';
+}
+
+int
+	map_solve(t_list *list)
+{
+	;
 }

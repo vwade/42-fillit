@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpush.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/15 06:17:09 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 15:04:48 by viwade           ###   ########.fr       */
+/*   Created: 2018/10/31 11:02:07 by viwade            #+#    #+#             */
+/*   Updated: 2019/01/21 03:50:07 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_include.h"
+#include "libft.h"
 
-void
-	ft_lstpush(t_list **list, t_list *new)
+char	*ft_strjoin_free(char const *s1, char const *s2)
 {
-	t_list	*push;
+	size_t	len;
+	char	*new;
 
-	if (!list[0])
-	{
-		list[0] = new;
-		return ;
-	}
-	push = list[0];
-	while ((push->next))
-		push = push->next;
-	if (!push->content)
-	{
-		ft_lstdelone(list, ft_del);
-		push = new;
-	}
-	else
-		push->next = new;
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	if ((new = (char *)malloc(sizeof(*new) * len + 1)))
+		if ((new = ft_strncpy(new, s1, len)))
+			if ((new = ft_strncat(new, s2, len)))
+				new[len] = 0;
+	free((void *)s1);
+	free((void *)s2);
+	return (new);
 }
