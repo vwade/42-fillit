@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 17:12:54 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/27 17:56:33 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,10 @@ static int
 			while (++i[0] < 4)
 				map[0][n * (t.pos.y + t.ndx[i[0]].y)
 					+ t.pos.x + t.ndx[i[0]].x] = 'A' + depth;
-			if ((i[0] = -1) &&
-					list->next && tetra_fits(list->next, map, n, depth + 1))
+			if ((i[0] = -1) && list->next)
+				if (tetra_fits(list->next, map, n, depth + 1))
+					return (1);
+			if (!list->next)
 				return (1);
 			while (++i[0] < 4)
 				map[0][n * (t.pos.y + t.ndx[i[0]].y)
