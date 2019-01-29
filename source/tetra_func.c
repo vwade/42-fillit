@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 19:31:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 21:29:36 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 21:59:34 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,34 @@ t_tetra_t
 	return (tetra);
 }
 
-static int
-	check_tetra(t_tetra_t t, char *map, int n)
+static t_xy_t
+	set_dimensions(t_tetra_t t, t_xy_t dim)
 {
-	return (
-		map[n * (t.pos.y + t.ndx[0].y) + t.pos.x + t.ndx[0].x] == g_c &&
-		map[n * (t.pos.y + t.ndx[1].y) + t.pos.x + t.ndx[1].x] == g_c &&
-		map[n * (t.pos.y + t.ndx[2].y) + t.pos.x + t.ndx[2].x] == g_c &&
-		map[n * (t.pos.y + t.ndx[3].y) + t.pos.x + t.ndx[3].x] == g_c);
+	int		i;
+
+	i = -1;
+	while (++i < 4)
+		dim = (t_xy_t){dim.x < t.ndx[i].x + 1 ? t.ndx[i].x + 1 : dim.x,
+			dim.y < t.ndx[i].y + 1 ? t.ndx[i].y + 1 : dim.y};
+	return (dim);
 }
 
-static void
+static int
 	write_tetra(char **map, t_tetra_t t, int n, char c)
 {
-	map[0][n * (t.pos.y + t.ndx[0].y) + t.pos.x + t.ndx[0].x] = c;
-	map[0][n * (t.pos.y + t.ndx[1].y) + t.pos.x + t.ndx[1].x] = c;
-	map[0][n * (t.pos.y + t.ndx[2].y) + t.pos.x + t.ndx[2].x] = c;
-	map[0][n * (t.pos.y + t.ndx[3].y) + t.pos.x + t.ndx[3].x] = c;
+	if (c)
+	{
+		map[0][n * (t.pos.y + t.ndx[0].y) + t.pos.x + t.ndx[0].x] = c;
+		map[0][n * (t.pos.y + t.ndx[1].y) + t.pos.x + t.ndx[1].x] = c;
+		map[0][n * (t.pos.y + t.ndx[2].y) + t.pos.x + t.ndx[2].x] = c;
+		map[0][n * (t.pos.y + t.ndx[3].y) + t.pos.x + t.ndx[3].x] = c;
+		return (0);
+	}
+	return (
+		map[0][n * (t.pos.y + t.ndx[0].y) + t.pos.x + t.ndx[0].x] == g_c &&
+		map[0][n * (t.pos.y + t.ndx[1].y) + t.pos.x + t.ndx[1].x] == g_c &&
+		map[0][n * (t.pos.y + t.ndx[2].y) + t.pos.x + t.ndx[2].x] == g_c &&
+		map[0][n * (t.pos.y + t.ndx[3].y) + t.pos.x + t.ndx[3].x] == g_c);
 }
 
 int
@@ -99,31 +110,24 @@ int
 	int			*i;
 	t_tetra_t	t;
 	t_xy_t		dim;
-	t_xy_t		x;
 
 	i = (int[5]){0, 0, 0, 0, -1};
-	x = (t_xy_t){0, 0};
-	dim = (t_xy_t){1, 1};
 	t = ((t_tetra_t *)list->content)[0];
-	while (++i[4] < 4)
-		dim = (t_xy_t){dim.x < t.ndx[i[4]].x + 1 ? t.ndx[i[4]].x + 1 : dim.x,
-			dim.y < t.ndx[i[4]].y + 1 ? t.ndx[i[4]].y + 1 : dim.y};
+	dim = set_dimensions(t, (t_xy_t){1, 1});
 	if (dim.x > n || dim.y > n)
 		return (0);
-	while (i[1] < n * n - (dim.y - 1) * n && (i[0] = -1))
+	while (i[1] < n * n - (dim.y - 1) * n)
 	{
-		x = (t_xy_t){i[1] % n, i[1] / n};
-		t.pos = x;
-		if (check_tetra(t, map[0], n) && (i[0] = -1))
+		t.pos = (t_xy_t){i[1] % n, i[1] / n};
+		if (write_tetra(map, t, n, 0))
 		{
 			write_tetra(map, t, n, 'A' + depth % 26 + (depth > 25) * 32);
-			if (!list->next)
-				return (1);
-			if (list->next && tetra_fits(list->next, map, n, depth + 1))
+			if ((list->next && tetra_fits(list->next, map, n, depth + 1))
+					|| (!list->next))
 				return (1);
 			write_tetra(map, t, n, g_c);
 		}
-		i[1] += !(i[3] = 0) && (n - x.x == dim.x) ? n - x.x : 1;
+		i[1] += !(i[3] = 0) && (n - t.pos.x == dim.x) ? n - t.pos.x : 1;
 	}
 	return (0);
 }
