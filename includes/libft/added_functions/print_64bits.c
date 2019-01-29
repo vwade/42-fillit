@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print_64bits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 21:59:40 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/11 12:17:06 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 19:46:22 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-typedef t_list tlist;
+typedef t_list	t_list_t;
 
 static void
 	del(void *ap, size_t len)
@@ -25,8 +25,8 @@ void
 	print_64bits(uint64_t llu)
 {
 	unsigned char	ndx;
-	tlist			*queue;
-	tlist			*next;
+	t_list_t			*queue;
+	t_list_t			*next;
 
 	ndx = 0x80;
 	queue = ft_lstnew(&llu, sizeof(llu));
