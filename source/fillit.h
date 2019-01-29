@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:04:16 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/28 20:32:35 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 20:55:49 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ size_t	root_int(int n);
 t_tetra	*make_tetra(char *str);
 int		validate_tetra(t_tetra *tetra);
 int		tetra_fits(t_list *list, char **map, int n, int depth);
+int		str_verify(char *s);
+int		str_isvalid(char *s);
 
 #endif

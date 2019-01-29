@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 20:33:50 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 20:57:47 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,6 @@ typedef struct s_tetra	t_tetra_t;
 typedef struct s_list	t_list_t;
 typedef struct s_coord	t_xy_t;
 
-static int
-	str_validate(char *s)
-{
-	int		i;
-	int		count;
-	t_xy_t	x;
-
-	i = 0;
-	count = 0;
-	if (ft_strlen(s) != 16)
-		return (0);
-	while (s[i])
-	{
-		x.x = i % 4;
-		x.y = i / 4;
-		if (s[i] == '#')
-			count += ((x.x + 1 < 4) ? s[i + 1] == '#' : 0)
-				+ ((x.y + 1 < 4) ? s[i + 4] == '#' : 0);
-		if (count == 3)
-			return (1);
-		++i;
-	}
-	return (count == 3);
-}
-
-static int
-	isvalid(char *s)
-{
-	int	count;
-
-	count = 0;
-	while (*s++)
-	{
-		if (*(s - 1) != '.' && *(s - 1) != '#' && *(s - 1) != '\n')
-			return (0);
-		count += (*(s - 1) == '#');
-	}
-	return (count == 4);
-}
-
 static char
 	*process_chunk(char *s)
 {
@@ -64,7 +24,7 @@ static char
 	char	*tmp;
 	char	**list;
 
-	if (!isvalid(s))
+	if (!str_isvalid(s))
 		return (NULL);
 	i = 0;
 	fill = ft_strnew(0);
@@ -81,7 +41,7 @@ static char
 	}
 	free(s);
 	free(list);
-	return (str_validate(fill) ? fill : NULL);
+	return (str_verify(fill) ? fill : NULL);
 }
 
 static void

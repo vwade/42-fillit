@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 19:31:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 20:31:50 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 21:29:36 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 typedef t_tetra	t_tetra_t;
 typedef t_list	t_list_t;
 typedef t_coord	t_xy_t;
+
+char	g_c = '.';
 
 static void
 	normalize(t_tetra **tetra)
@@ -72,24 +74,23 @@ t_tetra_t
 	return (tetra);
 }
 
-int
-	validate_tetra(t_tetra_t *tetra)
+static int
+	check_tetra(t_tetra_t t, char *map, int n)
 {
-	int	i;
-	int	count;
+	return (
+		map[n * (t.pos.y + t.ndx[0].y) + t.pos.x + t.ndx[0].x] == g_c &&
+		map[n * (t.pos.y + t.ndx[1].y) + t.pos.x + t.ndx[1].x] == g_c &&
+		map[n * (t.pos.y + t.ndx[2].y) + t.pos.x + t.ndx[2].x] == g_c &&
+		map[n * (t.pos.y + t.ndx[3].y) + t.pos.x + t.ndx[3].x] == g_c);
+}
 
-	i = 0;
-	while (i < 4)
-	{
-		++i;
-	}
-	i = -1;
-	count = 0;
-	while (i++ < 3)
-		if (count != 3)
-			count += (tetra->ndx[i].x + 1 == tetra->ndx[i + 1].x)
-				+ (tetra->ndx[i].y + 1 == tetra->ndx[i + 1].y);
-	return (count == 3);
+static void
+	write_tetra(char **map, t_tetra_t t, int n, char c)
+{
+	map[0][n * (t.pos.y + t.ndx[0].y) + t.pos.x + t.ndx[0].x] = c;
+	map[0][n * (t.pos.y + t.ndx[1].y) + t.pos.x + t.ndx[1].x] = c;
+	map[0][n * (t.pos.y + t.ndx[2].y) + t.pos.x + t.ndx[2].x] = c;
+	map[0][n * (t.pos.y + t.ndx[3].y) + t.pos.x + t.ndx[3].x] = c;
 }
 
 int
@@ -113,23 +114,14 @@ int
 	{
 		x = (t_xy_t){i[1] % n, i[1] / n};
 		t.pos = x;
-		while (++i[0] < 4)
-			i[3] += (map[0][n * (t.pos.y + t.ndx[i[0]].y)
-				+ t.pos.x + t.ndx[i[0]].x] == '.');
-		if (i[3] == 4 && (i[0] = -1))
+		if (check_tetra(t, map[0], n) && (i[0] = -1))
 		{
-			while (++i[0] < 4)
-				map[0][n * (t.pos.y + t.ndx[i[0]].y)
-					+ t.pos.x + t.ndx[i[0]].x] = 'A' + depth % 26
-					+ (depth > 25 ? 32 : 0);
-			if ((i[0] = -1) && list->next)
-				if (tetra_fits(list->next, map, n, depth + 1))
-					return (1);
+			write_tetra(map, t, n, 'A' + depth % 26 + (depth > 25) * 32);
 			if (!list->next)
 				return (1);
-			while (++i[0] < 4)
-				map[0][n * (t.pos.y + t.ndx[i[0]].y)
-					+ t.pos.x + t.ndx[i[0]].x] = '.';
+			if (list->next && tetra_fits(list->next, map, n, depth + 1))
+				return (1);
+			write_tetra(map, t, n, g_c);
 		}
 		i[1] += !(i[3] = 0) && (n - x.x == dim.x) ? n - x.x : 1;
 	}
