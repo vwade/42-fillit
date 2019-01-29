@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 21:04:41 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 19:06:29 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/01/28 19:15:22 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-struct			s_file
+struct	s_file
 {
 	size_t	ndx;
 	size_t	len;
@@ -28,6 +28,6 @@ struct			s_file
 };
 typedef struct s_file	t_file;
 
-int	get_next_line(const int fd, char **line);
+int		get_next_line(const int fd, char **line);
 
 #endif
