@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:04:16 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/20 20:18:06 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 15:23:34 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@
 # include "../includes/get_next_line.h"
 # include <stdlib.h>
 # include <fcntl.h>
-
-struct	s_str
-{
-	char	*str;
-	size_t	len;
-};
-typedef struct s_str	t_str;
 
 struct	s_map
 {
@@ -43,8 +36,6 @@ struct	s_tetra
 	t_coord ndx[4];
 };
 typedef struct s_tetra	t_tetra;
-
-t_str	*write_tstr(t_str *dst, char *content);
 
 size_t	tetra_len(t_tetra **list);
 t_tetra	**tetra_new(size_t size);

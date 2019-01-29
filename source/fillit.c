@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 21:28:23 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 17:26:40 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void
 }
 
 static t_tetra_t
-	*tetramino(char *str)
+	*make_tetramino(char *str)
 {
 	t_tetra_t	*tetra;
 	int			i;
@@ -183,7 +183,7 @@ static int
 		t.pos = x;
 		while (++i[0] < 4)
 			i[3] += (map[0][n * (t.pos.y + t.ndx[i[0]].y)
-				+ t.pos.x + t.ndx[i[0]].x] == ' ');
+				+ t.pos.x + t.ndx[i[0]].x] == '.');
 		if (i[3] == 4 && (i[0] = -1))
 		{
 			while (++i[0] < 4)
@@ -197,7 +197,7 @@ static int
 				return (1);
 			while (++i[0] < 4)
 				map[0][n * (t.pos.y + t.ndx[i[0]].y)
-					+ t.pos.x + t.ndx[i[0]].x] = ' ';
+					+ t.pos.x + t.ndx[i[0]].x] = '.';
 		}
 		i[1] += !(i[3] = 0) && (n - x.x == dim.x) ? n - x.x : 1;
 	}
@@ -218,17 +218,30 @@ static void
 	}
 }
 
+static size_t
+	root_int(int n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i * i < (size_t)n)
+		++i;
+	return (i);
+}
+
 static void
 	solve(t_list_t *list)
 {
 	char	*map;
-	int		map_size;
+	size_t	map_size;
 
-	map_size = 2;
+	if (ft_lstlen(list) > 52)
+		return (ft_error("error"));
+	map_size = 2 * root_int(ft_lstlen(list));
 	while ((1))
 	{
 		map = ft_strnew(map_size * map_size);
-		map = ft_memset(map, ' ', map_size * map_size);
+		map = ft_memset(map, '.', map_size * map_size);
 		if (tetra_fits(list, &map, map_size, 0))
 			break ;
 		else
@@ -255,7 +268,7 @@ static void
 		if ((ret[0] = 2 * (!str ||
 				(file[i + 20] != '\n' && file[i + 20] != '\0'))))
 			return ;
-		ft_lstpush(&list, ft_lstnew(tetramino(str), sizeof(t_tetra_t)));
+		ft_lstpush(&list, ft_lstnew(make_tetramino(str), sizeof(t_tetra_t)));
 		free(str);
 		i += 20 + (file[i + 20] == '\n');
 		if (!file[i])
@@ -264,7 +277,7 @@ static void
 				|| (&file[i] > &file[len]))))
 			return ;
 	}
-	if ((ret[0] = 3 * (!list->content)))
+	if ((ret[0] = 3 * (!list)))
 		return ;
 	return (solve(list));
 }
@@ -273,14 +286,14 @@ static int
 	ret_function(int ret)
 {
 	if (ret == -1)
-		ft_putendl("usage:\t""fillit input_file\n"
-			"file: (1-26 pieces max)");
+		ft_putendl("usage: ""fillit input_file\n"
+					"       file must have between 1 and 26 tetriminos");
 	if (ret == 1)
-		ft_error("error");
+		ft_error("error: file read error");
 	if (ret == 2)
-		ft_error("error");
+		ft_error("error: tetramino read error");
 	if (ret == 3)
-		ft_error("error");
+		ft_error("error: unspecified error");
 	return (ret);
 }
 
