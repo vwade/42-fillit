@@ -6,35 +6,15 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 19:41:32 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 20:33:50 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-typedef t_tetra	t_tetra_t;
-typedef t_list	t_list_t;
-typedef t_coord	t_xy_t;
-
-static int
-	validate(t_tetra_t *tetra)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	while (i < 4)
-	{
-		++i;
-	}
-	i = -1;
-	count = 0;
-	while (i++ < 3)
-		if (count != 3)
-			count += (tetra->ndx[i].x + 1 == tetra->ndx[i + 1].x)
-				+ (tetra->ndx[i].y + 1 == tetra->ndx[i + 1].y);
-	return (count == 3);
-}
+typedef struct s_tetra	t_tetra_t;
+typedef struct s_list	t_list_t;
+typedef struct s_coord	t_xy_t;
 
 static int
 	str_validate(char *s)
@@ -104,76 +84,6 @@ static char
 	return (str_validate(fill) ? fill : NULL);
 }
 
-static int
-	tetra_fits(t_list_t *list, char **map, int n, int depth)
-{
-	int			*i;
-	t_tetra_t	t;
-	t_xy_t		dim;
-	t_xy_t		x;
-
-	i = (int[5]){0, 0, 0, 0, -1};
-	x = (t_xy_t){0, 0};
-	dim = (t_xy_t){1, 1};
-	t = ((t_tetra_t *)list->content)[0];
-	while (++i[4] < 4)
-		dim = (t_xy_t){dim.x < t.ndx[i[4]].x + 1 ? t.ndx[i[4]].x + 1 : dim.x,
-			dim.y < t.ndx[i[4]].y + 1 ? t.ndx[i[4]].y + 1 : dim.y};
-	if (dim.x > n || dim.y > n)
-		return (0);
-	while (i[1] < n * n - (dim.y - 1) * n && (i[0] = -1))
-	{
-		x = (t_xy_t){i[1] % n, i[1] / n};
-		t.pos = x;
-		while (++i[0] < 4)
-			i[3] += (map[0][n * (t.pos.y + t.ndx[i[0]].y)
-				+ t.pos.x + t.ndx[i[0]].x] == '.');
-		if (i[3] == 4 && (i[0] = -1))
-		{
-			while (++i[0] < 4)
-				map[0][n * (t.pos.y + t.ndx[i[0]].y)
-					+ t.pos.x + t.ndx[i[0]].x] = 'A' + depth % 26
-					+ (depth > 25 ? 32 : 0);
-			print_map(map);
-			if ((i[0] = -1) && list->next)
-				if (tetra_fits(list->next, map, n, depth + 1))
-					return (1);
-			if (!list->next)
-				return (1);
-			while (++i[0] < 4)
-				map[0][n * (t.pos.y + t.ndx[i[0]].y)
-					+ t.pos.x + t.ndx[i[0]].x] = '.';
-		}
-		i[1] += !(i[3] = 0) && (n - x.x == dim.x) ? n - x.x : 1;
-	}
-	return (0);
-}
-
-static void
-	print_map(char *map, int size)
-{
-	int i;
-
-	i = 0;
-	while (&map[i] < &map[size * size])
-	{
-		write(1, &map[i], size);
-		write(1, "\n", 1);
-		i += size;
-	}
-}
-
-static size_t
-	root_int(int n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i * i < (size_t)n)
-		++i;
-	return (i);
-}
-
 static void
 	solve(t_list_t *list)
 {
@@ -195,6 +105,7 @@ static void
 	}
 	print_map(map, map_size);
 	free(map);
+	ft_lstdel(&list, ft_del);
 }
 
 static void
@@ -213,12 +124,12 @@ static void
 		if ((ret[0] = 2 * (!str ||
 				(file[i + 20] != '\n' && file[i + 20] != '\0'))))
 			return ;
-		ft_lstpush(&list, ft_lstnew(make_tetramino(str), sizeof(t_tetra_t)));
+		ft_lstpush(&list, ft_lstnew(make_tetra(str), sizeof(t_tetra_t)));
 		free(str);
 		i += 20 + (file[i + 20] == '\n');
 		if (!file[i])
 			break ;
-		if ((ret[0] = 2 * (!validate((t_tetra_t *)list->content)
+		if ((ret[0] = 2 * (!validate_tetra((t_tetra_t *)list->content)
 				|| (&file[i] > &file[len]))))
 			return ;
 	}
@@ -231,7 +142,7 @@ static int
 	ret_function(int ret)
 {
 	if (ret == -1)
-		ft_putendl("usage: ""fillit input_file\n"
+		ft_putendl("usage: fillit source_file\n"
 					"       file must have between 1 and 26 tetriminos");
 	if (ret == 1)
 		ft_error("error: file read error");

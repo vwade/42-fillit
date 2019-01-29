@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:04:16 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/28 19:45:33 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 20:32:35 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ struct	s_tetra
 typedef struct s_tetra	t_tetra;
 
 void	print_map(char *map, int size);
-t_tetra	make_tetramino(char *str);
-size_t	tetra_len(t_tetra **list);
-
-int		readline(const int fd, char **line);
 char	*readfile(int fd);
-char	*map_size(size_t size);
+size_t	root_int(int n);
+t_tetra	*make_tetra(char *str);
+int		validate_tetra(t_tetra *tetra);
+int		tetra_fits(t_list *list, char **map, int n, int depth);
 
 #endif

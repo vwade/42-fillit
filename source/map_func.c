@@ -3,25 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   map_func.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
+/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:34:21 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 19:13:37 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/01/28 19:52:06 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 void
-	map_print(t_tetra *node, int order, char **map, size_t map_size)
+	print_map(char *map, int size)
 {
-	int		i;
-	t_coord x;
+	int i;
 
-	i = -1;
-	x.x = node->pos.x;
-	x.y = node->pos.y;
-	while (++i < 4)
-		map[0][((node->ndx[i].y + x.y) * map_size)
-			+ (node->ndx[i].x + x.x)] = order + 'A';
+	i = 0;
+	while (&map[i] < &map[size * size])
+	{
+		write(1, &map[i], size);
+		write(1, "\n", 1);
+		i += size;
+	}
+}
+
+size_t
+	root_int(int n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i * i < (size_t)n)
+		++i;
+	return (i);
 }
