@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/23 16:34:03 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/24 18:21:26 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 19:07:31 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
+# include "added_functions/libft_include.h"
 
 void				ft_putchar(char c);
 void				ft_putstr(char const *s);
@@ -74,7 +75,7 @@ struct	s_list
 	size_t			content_size;
 	struct s_list	*next;
 };
-typedef struct s_list t_list;
+typedef struct s_list	t_list;
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
@@ -83,5 +84,4 @@ void				ft_lstadd(t_list **alst, t_list *newnode);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
-# include "added_functions/libft_include.h"
 #endif

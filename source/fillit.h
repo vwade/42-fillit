@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:04:16 by marvin            #+#    #+#             */
-/*   Updated: 2019/01/28 15:23:34 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 18:33:06 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,3 @@ char	*map_size(size_t size);
 t_map	*map_new(void);
 
 #endif
-
