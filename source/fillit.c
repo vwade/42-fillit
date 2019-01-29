@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 17:26:40 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/28 19:41:32 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,62 +15,6 @@
 typedef t_tetra	t_tetra_t;
 typedef t_list	t_list_t;
 typedef t_coord	t_xy_t;
-
-static void
-	normalize(t_tetra_t **tetra)
-{
-	int i;
-
-	tetra[0]->pos.y = tetra[0]->ndx[0].y;
-	tetra[0]->pos.x = tetra[0]->ndx[0].x;
-	i = 0;
-	while (++i < 4)
-		if (tetra[0]->ndx[i].x < tetra[0]->pos.x)
-			tetra[0]->pos.x = tetra[0]->ndx[i].x;
-	while ((tetra[0]->pos.x > 0 || tetra[0]->pos.y > 0))
-	{
-		if (tetra[0]->pos.x > 0 && !(i = 0))
-		{
-			tetra[0]->pos.x -= 1;
-			while (i < 4)
-				tetra[0]->ndx[i++].x -= 1;
-		}
-		if (tetra[0]->pos.y > 0 && !(i = 0))
-		{
-			tetra[0]->pos.y -= 1;
-			while (i < 4)
-				tetra[0]->ndx[i++].y -= 1;
-		}
-	}
-}
-
-static t_tetra_t
-	*make_tetramino(char *str)
-{
-	t_tetra_t	*tetra;
-	int			i;
-	int			j;
-
-	if (!(tetra = (t_tetra_t *)malloc(sizeof(*tetra))))
-		return (NULL);
-	tetra = (t_tetra_t *)ft_memset(tetra, 0, sizeof(*tetra));
-	j = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (j > 3)
-			break ;
-		if (str[i] == '#')
-		{
-			tetra->ndx[j].x = i % 4;
-			tetra->ndx[j].y = i / 4;
-			j++;
-		}
-		++i;
-	}
-	normalize(&tetra);
-	return (tetra);
-}
 
 static int
 	validate(t_tetra_t *tetra)
@@ -190,6 +134,7 @@ static int
 				map[0][n * (t.pos.y + t.ndx[i[0]].y)
 					+ t.pos.x + t.ndx[i[0]].x] = 'A' + depth % 26
 					+ (depth > 25 ? 32 : 0);
+			print_map(map);
 			if ((i[0] = -1) && list->next)
 				if (tetra_fits(list->next, map, n, depth + 1))
 					return (1);
