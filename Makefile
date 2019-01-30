@@ -3,8 +3,8 @@
 
 NAME		=	fillit
 LIB			=	libfillit.a
-BUILDdir	=	#build/
-OBJdir		=	#obj/
+BUILDdir	=	build/
+OBJdir		=	obj/
 OBJdir		:=	$(addprefix $(BUILDdir), $(OBJdir))
 CFILES		=	\
 				source/fillit.c \
@@ -45,8 +45,8 @@ OBJECTS		=	$(addprefix $(OBJdir), $(notdir $(CFILES:.c=.o)))
 
 all: $(NAME)
 
-$(NAME): $(LIB) | $(BUILDdir)
-	@gcc  -o $@ $(CFLAGS) $<
+$(NAME): 
+	@gcc -o $@ $(CFLAGS) $(CFILES)
 
 $(LIB): $(OBJECTS)
 	@ar rc $@ $<
