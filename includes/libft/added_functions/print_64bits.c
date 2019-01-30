@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print_64bits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
+/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 21:59:40 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 19:48:32 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/01/29 19:56:12 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
 typedef t_list	t_list_t;
 

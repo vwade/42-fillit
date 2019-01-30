@@ -6,11 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:25:07 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/21 05:26:29 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/29 19:58:41 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_include.h"
+#include "../libft.h"
 
 void
 	ft_del(void *ap, size_t len)

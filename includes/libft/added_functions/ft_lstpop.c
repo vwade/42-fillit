@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
+/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 06:24:16 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 19:44:48 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/01/29 19:58:46 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_include.h"
+#include "../libft.h"
 
 static void
 	del(void *ap, size_t len)

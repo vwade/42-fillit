@@ -6,11 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 03:58:52 by viwade            #+#    #+#             */
-/*   Updated: 2018/11/10 11:12:48 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/29 19:58:44 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 #include <stdlib.h>
 
 void	**ft_lst2arr(t_list *lst)

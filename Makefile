@@ -39,14 +39,15 @@ CFILES		=	\
 				includes/libft/added_functions/ft_lstpush.c \
 				includes/libft/added_functions/ft_error.c \
 				includes/libft/added_functions/ft_del.c
-CFLAGS		=	-Wall -Wextra -Werror
+FTDIR		=	includes/libft/
+CFLAGS		:=	-Wall -Wextra -Werror -L$(FTDIR)
 LIB			:=	$(addprefix $(BUILDdir), $(LIB))
 OBJECTS		=	$(addprefix $(OBJdir), $(notdir $(CFILES:.c=.o)))
 
 all: $(NAME)
 
-$(NAME): 
-	@gcc -o $@ $(CFLAGS) $(CFILES)
+$(NAME): $(LIB) | $(BUILDdir)
+	@gcc -o $@ $(CFLAGS) $(CFILES) -lft
 
 $(LIB): $(OBJECTS)
 	@ar rc $@ $<

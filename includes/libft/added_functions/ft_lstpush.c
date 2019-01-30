@@ -6,11 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 06:17:09 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/27 15:04:48 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/29 19:58:48 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_include.h"
+#include "../libft.h"
 
 void
 	ft_lstpush(t_list **list, t_list *new)

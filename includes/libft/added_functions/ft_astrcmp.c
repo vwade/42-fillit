@@ -6,11 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 21:44:27 by viwade            #+#    #+#             */
-/*   Updated: 2018/11/12 21:47:40 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/29 19:58:39 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
 int
 	ft_astrcmp(char **s1, char **s2)
