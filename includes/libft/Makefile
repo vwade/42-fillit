@@ -28,7 +28,7 @@ FMM = \e[35m#		MAGENTA COLOR
 
 ####	UNDER THE HOOD	########################################################
 
-$(OBJDIR)%.o: %.c | $(OBJDIR)
+$(OBJECTS): $(CFILES) | $(OBJDIR)
 	@$(CC) $(CFLAGS) $< -o $@
 
 all: $(NAME)
