@@ -12,7 +12,6 @@ CFILES		=	\
 				source/readfile.c \
 				source/tetra_func.c \
 				source/validation.c \
-				includes/get_next_line.c \
 				includes/libft/ft_bzero.c \
 				includes/libft/ft_lstnew.c \
 				includes/libft/ft_lstdel.c \
@@ -34,6 +33,7 @@ CFILES		=	\
 				includes/libft/ft_strsplit.c \
 				includes/libft/ft_strcpy.c \
 				includes/libft/ft_strchr.c \
+				includes/libft/added_functions/get_next_line.c \
 				includes/libft/added_functions/ft_arrlen.c \
 				includes/libft/added_functions/ft_lstlen.c \
 				includes/libft/added_functions/ft_lstpush.c \
