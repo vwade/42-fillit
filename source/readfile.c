@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readfile.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
+/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 20:04:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 20:41:32 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/01/30 21:14:44 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,27 @@ static int
 	return (1);
 }
 
-
 char
 	*readfile(int fd)
 {
 	int		i;
 	char	*line;
 	char	*str;
+	char	*tmp;
 
 	i = 0;
 	str = ft_strnew(0);
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (i == 4)
-			if (!verify(line, &i))
-				return (NULL);
-		join_line(&line, "\n");
-		join_line(&str, line);
+		if (!verify(line, &i))
+			return (NULL);
+		tmp = line;
+		line = ft_strjoin(line, "\n");
+		free(tmp);
+		tmp = str;
+		str = ft_strjoin(str, line);
 		free(line);
+		free(tmp);
 	}
 	return (!str[0] || !i ? NULL : str);
 }
