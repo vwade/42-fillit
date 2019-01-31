@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/28 20:57:47 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/30 16:42:18 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,8 @@ static int
 	if (ret == -1)
 		ft_putendl("usage: fillit source_file\n"
 					"       file must have between 1 and 26 tetriminos");
-	if (ret == 1)
-		ft_error("error: file read error");
-	if (ret == 2)
-		ft_error("error: tetramino read error");
-	if (ret == 3)
-		ft_error("error: unspecified error");
+	else if (ret)
+		ft_error("error");
 	return (ret);
 }
 
