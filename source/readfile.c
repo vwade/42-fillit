@@ -6,21 +6,11 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 20:04:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 19:19:39 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/01/30 20:41:32 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-static void
-	join_line(char **v, char *new)
-{
-	char	*tmp;
-
-	tmp = v[0];
-	v[0] = ft_strjoin(v[0], new);
-	free(tmp);
-}
 
 static int
 	verify(char *s, int *nonce)
@@ -42,6 +32,7 @@ static int
 	}
 	return (1);
 }
+
 
 char
 	*readfile(int fd)
