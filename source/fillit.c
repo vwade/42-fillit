@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 16:42:18 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/30 17:37:05 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void
 	char	*map;
 	size_t	map_size;
 
-	if (ft_lstlen(list) > 52)
+	if (ft_lstlen(list) > 26)
 		return (ft_error("error"));
-	map_size = 2 * root_int(ft_lstlen(list));
+	map_size = 2 * root_int(ft_lstlen(list)) - 1;
 	while ((1))
 	{
 		map = ft_strnew(map_size * map_size);
