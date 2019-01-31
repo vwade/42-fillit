@@ -1,0 +1,29 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Make/Build",
+            "type": "shell",
+            "command": "make all"
+        },
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-g",
+                "-Wall",
+                "-Wextra",
+                "-Werror",
+                "source/fillit.c",
+                "source/map_func.c",
+                "source/readfile.c",
+                "source/tetra_func.c",
+                "source/validation.c",
+                "includes/libft/libft.a"
+            ]
+        }
+    ]
+}
