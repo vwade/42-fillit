@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 20:04:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 20:39:51 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/30 20:43:49 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int
 	return (1);
 }
 
-
 char
 	*readfile(int fd)
 {
@@ -52,7 +51,6 @@ char
 		line = ft_strjoin(line, "\n");
 		free(tmp);
 		tmp = str;
-
 		str = ft_strjoin(str, line);
 		free(line);
 		free(tmp);
