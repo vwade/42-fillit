@@ -12,7 +12,6 @@ CFILES		=	source/fillit.c \
 				source/validation.c
 LIBFT		=	includes/libft/libft.a
 CFLAGS		=	-Wall -Wextra -Werror
-CFLAGS		+=	-g
 
 ####	AUTO SET		########################################################
 OBJDIR		:=	$(addprefix $(BUILDDIR), $(OBJDIR))

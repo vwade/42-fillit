@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 20:04:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 18:10:15 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/30 18:27:12 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,5 @@ char
 		join_line(&str, line);
 		free(line);
 	}
-	return (!str[0] ? NULL : str);
+	return (!str[0] || !i ? NULL : str);
 }
