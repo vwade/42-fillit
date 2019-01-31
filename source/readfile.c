@@ -6,7 +6,7 @@
 /*   By: bcastro <bcastro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 20:04:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 19:18:12 by bcastro          ###   ########.fr       */
+/*   Updated: 2019/01/30 19:19:39 by bcastro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ char
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (i == 4)
-
-		if (!verify(line, &i))
-			return (NULL);
+			if (!verify(line, &i))
+				return (NULL);
 		join_line(&line, "\n");
 		join_line(&str, line);
 		free(line);
