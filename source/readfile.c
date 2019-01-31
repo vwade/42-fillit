@@ -6,21 +6,11 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 20:04:53 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 20:59:58 by viwade           ###   ########.fr       */
+/*   Updated: 2019/01/30 21:18:49 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-static void
-	join_line(char **v, char *new)
-{
-	char	*tmp;
-
-	tmp = v[0];
-	v[0] = ft_strjoin(v[0], new);
-	free(tmp);
-}
 
 static int
 	verify(char *s, int *nonce)
@@ -49,17 +39,21 @@ char
 	int		i;
 	char	*line;
 	char	*str;
+	char	*tmp;
 
 	i = 0;
 	str = ft_strnew(0);
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (i == 4)
-			if (!verify(line, &i))
-				return (NULL);
-		join_line(&line, "\n");
-		join_line(&str, line);
+		if (!verify(line, &i))
+			return (NULL);
+		tmp = line;
+		line = ft_strjoin(line, "\n");
+		free(tmp);
+		tmp = str;
+		str = ft_strjoin(str, line);
 		free(line);
+		free(tmp);
 	}
 	return (!str[0] || !i ? NULL : str);
 }
