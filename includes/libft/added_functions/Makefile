@@ -1,6 +1,6 @@
 
 CFILES		=	$(notdir $(wildcard *.c))
-OBJECTS		=	$(addprefix $(OBJDIR), $(notdir $(CFILES:%.c=%.o)))
+OBJECTS		=	$(notdir $(CFILES:%.c=%.o))
 
 
 all: $(OBJECTS)
