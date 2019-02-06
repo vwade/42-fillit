@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/01/30 19:03:23 by viwade           ###   ########.fr       */
+/*   Updated: 2019/02/06 07:19:36 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char
 	{
 		if (ft_strlen(list[i]) != 4)
 			return (NULL);
+			
 		tmp = fill;
 		fill = (fill) ? ft_strjoin(fill, list[i]) : ft_strdup(list[i]);
 		free(list[i]);
@@ -44,15 +45,38 @@ static char
 	return (str_verify(fill) ? fill : NULL);
 }
 
+static size_t
+	get_max_dim(t_list_t *list)
+{
+	size_t		i;
+	size_t		len;
+	size_t		max;
+	t_xy_t		dim;
+	t_tetra_t	t;
+
+	len = ft_lstlen(list);
+	dim = (t_xy_t){1, 1};
+	while (list && (i = -1))
+	{
+		t = ((t_tetra_t *)list->content)[0];
+		while (++i < 4)
+			dim = (t_xy_t){dim.x < t.ndx[i].x + 1 ? t.ndx[i].x + 1 : dim.x,
+				dim.y < t.ndx[i].y + 1 ? t.ndx[i].y + 1 : dim.y};
+		list = list->next;
+	}
+	max = dim.x > dim.y ? dim.x : dim.y;
+	return (2 * root_int(len) - (max % 2));
+}
+
 static void
 	solve(t_list_t *list)
 {
 	char	*map;
 	size_t	map_size;
 
-	if (ft_lstlen(list) > 26)
+	if (ft_lstlen(list) > 52)
 		return (ft_error("error"));
-	map_size = 2 * root_int(ft_lstlen(list)) - 1;
+	map_size = get_max_dim(list);
 	while ((1))
 	{
 		map = ft_strnew(map_size * map_size);
@@ -98,17 +122,6 @@ static void
 	return (solve(list));
 }
 
-static int
-	ret_function(int ret)
-{
-	if (ret == -1)
-		ft_putendl("usage: fillit source_file\n"
-					"       file must have between 1 and 26 tetriminos");
-	else if (ret)
-		ft_error("error");
-	return (ret);
-}
-
 int
 	main(int n, char **v)
 {
@@ -120,38 +133,20 @@ int
 	ret = 0;
 	list = NULL;
 	if (n != 2)
-		return (ret_function(-1));
+	{
+		ft_putendl("usage: fillit source_file\n"
+			"       file must have between 1 and 26 tetriminos");
+		return (-1);
+	}
 	fd = (open(v[1], O_RDONLY));
 	if (!(input = readfile(fd)))
-		return (ret_function(1));
+	{
+		ft_error("error");
+		return (1);
+	}
 	error_check(input, list, &ret);
 	close(fd);
-	return (ret_function(ret));
+	if (ret > 0)
+		ft_error("error");
+	return (ret);
 }
-
-/*
-**	FOOTNOTES
-**
-**	Will need.
-**	Map variable
-**	Choice of variable storage
-**
-**	Read input.
-**	4 lines at a time
-**
-**	Validate.
-**	Each line is length of 4
-**	Only '.' or '#' characters allowed
-**	Total characters counted == 16.
-**
-**	Partition.
-**
-**	Solve for coordinates. Where "n" is the size of grid.
-**
-**	CONVERSION: String Index => Coordinate
-**	cd.x = i % n;
-**	cd.y = i / n;
-**
-**	CONVERSION: Coordinate => String Index
-**	i = (cd.y * n) + (cd.x);
-*/
