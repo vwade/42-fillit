@@ -6,7 +6,7 @@
 /*   By: viwade <viwade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 04:01:54 by viwade            #+#    #+#             */
-/*   Updated: 2019/02/06 07:19:36 by viwade           ###   ########.fr       */
+/*   Updated: 2019/02/06 07:37:29 by viwade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static char
 	{
 		if (ft_strlen(list[i]) != 4)
 			return (NULL);
-			
 		tmp = fill;
 		fill = (fill) ? ft_strjoin(fill, list[i]) : ft_strdup(list[i]);
 		free(list[i]);
@@ -60,8 +59,10 @@ static size_t
 	{
 		t = ((t_tetra_t *)list->content)[0];
 		while (++i < 4)
-			dim = (t_xy_t){dim.x < t.ndx[i].x + 1 ? t.ndx[i].x + 1 : dim.x,
-				dim.y < t.ndx[i].y + 1 ? t.ndx[i].y + 1 : dim.y};
+			dim = (t_xy_t){
+				dim.x < t.ndx[i].x + 1 ? t.ndx[i].x + 1 : dim.x,
+				dim.y < t.ndx[i].y + 1 ? t.ndx[i].y + 1 : dim.y
+				};
 		list = list->next;
 	}
 	max = dim.x > dim.y ? dim.x : dim.y;
@@ -134,7 +135,8 @@ int
 	list = NULL;
 	if (n != 2)
 	{
-		ft_putendl("usage: fillit source_file\n"
+		ft_putendl(
+			"usage: fillit source_file\n"
 			"       file must have between 1 and 26 tetriminos");
 		return (-1);
 	}
