@@ -12,3 +12,4 @@ x.*-sh*
 a.out*
 .vscode*
 fillit*
+*.txt
